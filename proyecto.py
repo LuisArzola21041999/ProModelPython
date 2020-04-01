@@ -1,6 +1,11 @@
 from numaleatorios import Aleatorio
 import math
 import statistics
+from scipy.stats import expon
+import numpy as np
+
+# prueba = np.random.exponential(8)
+# print(prueba)
 
 random  = Aleatorio()
 
@@ -23,7 +28,8 @@ eventos = []
 # CICLO PARA LAS LLEGADAS DE LOS CLIENTES RAPIDOS
 while(tiempo < tiempo_max):
     evento = Evento()
-    tiempo = tiempo + random.exponencial(8) #TIEMPO DE LLEGADA EXPONENCIAL CON MEDIA DE 8 MINUTOS
+    # tiempo = tiempo + random.exponencial(8) #TIEMPO DE LLEGADA EXPONENCIAL CON MEDIA DE 8 MINUTOS
+    tiempo = tiempo + np.random.exponential(8) #TIEMPO DE LLEGADA EXPONENCIAL CON MEDIA DE 8 MINUTOS
     evento.tiempo_creacion = tiempo 
     evento.tiempo_evento = evento.tiempo_creacion
     evento.tipo_evento = "llegada_rapida"
@@ -34,7 +40,8 @@ tiempo = 0
 # CICLO PARA LAS LLEGADAS DE LOS CLIENTES LENTOS
 while(tiempo < tiempo_max):
     evento = Evento()
-    tiempo = tiempo + random.exponencial(20) #TIEMPO DE LLEGADA EXPONENCIAL CON MEDIA DE 20 MINUTOS
+    # tiempo = tiempo + random.exponencial(20) #TIEMPO DE LLEGADA EXPONENCIAL CON MEDIA DE 20 MINUTOS
+    tiempo = tiempo + np.random.exponential(20) #TIEMPO DE LLEGADA EXPONENCIAL CON MEDIA DE 20 MINUTOS
     evento.tiempo_creacion = tiempo 
     evento.tiempo_evento = evento.tiempo_creacion
     evento.tipo_evento = "llegada_lenta"
@@ -75,7 +82,7 @@ while(tiempo < tiempo_max):
         if(len(cola_de_espera_Rapida) == 0 and cajera_caja_rapida_ocupada == False):
             cajera_caja_rapida_ocupada = True
             evento.tiempo_inspeccion = tiempo
-            evento.tiempo_evento = tiempo + random.exponencial(2) ##TIEMPO EN QUE ATIENDEN EN LA CAJA RÁPIDA
+            evento.tiempo_evento = tiempo + np.random.exponential(2) ##TIEMPO EN QUE ATIENDEN EN LA CAJA RÁPIDA
             evento.prevEvento = evento.tipo_evento
             evento.tipo_evento ="salida_atendido_rapido"
             evento.tiempo_salida_rapido = evento.tiempo_evento
@@ -97,7 +104,7 @@ while(tiempo < tiempo_max):
             pieza = cola_de_espera_Rapida.pop(0)
             cajera_caja_rapida_ocupada = True
             pieza.tiempo_inspeccion = tiempo
-            pieza.tiempo_evento = tiempo + random.exponencial(2) ##TIEMPO EN QUE ATIENDEN EN LA CAJA RAPIDA 
+            pieza.tiempo_evento = tiempo + np.random.exponential(2) ##TIEMPO EN QUE ATIENDEN EN LA CAJA RAPIDA 
             pieza.tiempo_salida = pieza.tiempo_evento
             pieza.prevEvento = pieza.tipo_evento
             pieza.tipo_evento ="salida_atendido_rapido"
@@ -110,7 +117,7 @@ while(tiempo < tiempo_max):
         if(len(cola_de_espera_Lenta) == 0 and cajera_caja_lenta_ocupada == False):
             cajera_caja_lenta_ocupada = True
             evento.tiempo_inspeccion = tiempo
-            evento.tiempo_evento = tiempo + random.exponencial(16.4) ##TIEMPO EN QUE ATIENDEN EN LA CAJA RÁPIDA
+            evento.tiempo_evento = tiempo + np.random.exponential(16.4) ##TIEMPO EN QUE ATIENDEN EN LA CAJA RÁPIDA
             evento.prevEvento = evento.tipo_evento
             evento.tipo_evento ="salida_atendido_lento"
             evento.tiempo_salida_lento = evento.tiempo_evento
@@ -129,7 +136,7 @@ while(tiempo < tiempo_max):
             pieza = cola_de_espera_Lenta.pop(0)
             cajera_caja_lenta_ocupada = True
             pieza.tiempo_inspeccion = tiempo
-            pieza.tiempo_evento = tiempo + random.exponencial(16.4) ##TIEMPO EN QUE ATIENDEN EN LA CAJA LENTA 
+            pieza.tiempo_evento = tiempo + np.random.exponential(16.4) ##TIEMPO EN QUE ATIENDEN EN LA CAJA LENTA 
             pieza.tiempo_salida = pieza.tiempo_evento
             pieza.prevEvento = pieza.tipo_evento
             pieza.tipo_evento ="salida_atendido_lento"
@@ -139,14 +146,14 @@ while(tiempo < tiempo_max):
 
 
 
-for x in listaClientesEnColaDeEsperaRapida:
-    print ( x )
+# for x in listaClientesEnColaDeEsperaRapida:
+#     print ( x )
     
     
-print("separacion")
+# print("separacion")
 
-for x in listaClientesEnColaDeEsperaLenta:
-    print ( x )
+# for x in listaClientesEnColaDeEsperaLenta:
+#     print ( x )
 
 
 def promediarLista(lista):
@@ -162,13 +169,12 @@ promedio2 = promediarLista(listaClientesEnColaDeEsperaLenta)
 
 # promedio1 = mean(listaClientesEnColaDeEsperaRapida)
 
-print (promedio1)
+# print (promedio1)
 
-print (promedio2)
-
+# print (promedio2)
+print("Promedio de clientes en cola rápida: ")
 print(statistics.mean(listaClientesEnColaDeEsperaRapida)) #Utilizando el método que me comentó el profe
-
+print("Promedio de clientes en cola lenta: ")
 print(statistics.mean(listaClientesEnColaDeEsperaLenta)) #Utilizando el método que me comentó el profe
 
-# print ("F")
 
